@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/boilerplate.css">
+  <!-- link rel="stylesheet" href="css/style.css" -->
+</head>
+
+<body>
+
+<h1>Mock Imageboard</h1>
+
+<form id="post-form">
+  <label for="post-form-image">
+    Image:
+    <br/>
+    <input id="post-form-image" type="file" name="image" accept="image/png,image/bmp,"/>
+  </label>
+  <br/>
+  <label for="post-form-subject">
+    Subject:
+    <br/>
+    <input id="post-form-subject" type="text" name="subject"/>
+  </label>
+  <br/>
+  <label for="post-form-body">
+    Body:
+    <br/>
+    <textarea id="post-form-body" name="body"></textarea>
+  </label>
+  <br/>
+  <input id="post-submit" type="submit" value="Post"/>
+</form>
+
+<h2>Feed</h2>
+<ul id="feed">
+  <li>
+    <!-- img class="post-image" src=""/ -->
+    <div class="post-subject">This is a subject.</div>
+    <div class="post-body">This is a body!</div>
+  </li>
+</ul>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
