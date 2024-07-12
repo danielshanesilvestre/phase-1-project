@@ -1,7 +1,7 @@
 {
   "posts": [
     {
-      "image": "file:///C:/Users/Danny/Flatiron/phase-1-project/200x200.png",
+      "image": "./200x200.png",
       "subject": "This is a subject too!",
       "body": "But is this a body?",
       "replies": []

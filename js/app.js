@@ -29,6 +29,11 @@ function renderPost(post) {
   let li = document.createElement("li");
   feed.append(li);
 
+  let post_image = document.createElement("img");
+  post_image.classList.add("post-image");
+  post_image.setAttribute("src", post.image);
+  li.append(post_image);
+
   let post_subject = document.createElement("div");
   post_subject.classList.add("post-subject");
   post_subject.textContent = post.subject;

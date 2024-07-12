@@ -9,6 +9,11 @@ form {
     line-height: 150%;
 }
 
+#feed img {
+    max-width: 400px;
+    max-height: 200px;
+}
+
 input {
     color: #F8F8F2;
     font-size: large;
