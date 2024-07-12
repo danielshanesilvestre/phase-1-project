@@ -1,0 +1,36 @@
+body {
+    font-family: sans-serif;
+    color: #F8F8F2;
+    background-color: #22212C;
+}
+
+form {
+    font-size: large;
+    line-height: 150%;
+}
+
+input {
+    color: #F8F8F2;
+    font-size: large;
+}
+
+input[type="text"], textarea {
+    color: #F8F8F2;
+    background-color: #454158;
+    border: none;
+    resize: none;
+}
+
+input[type="submit"], input::file-selector-button {
+    color: #F8F8F2;
+    background-color: #454158;
+    border: none;
+    border-radius: 3px;
+}
+input[type="submit"]:hover, input::file-selector-button:hover {
+    background-color: #383950;
+}
+
+input[type="submit"]:active, input::file-selector-button:active {
+    background-color: #302840;
+}
