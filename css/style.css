@@ -9,9 +9,40 @@ form {
     line-height: 150%;
 }
 
-#feed img {
+li {
+    clear: left;
+}
+
+#feed > li {
+    margin-bottom: 12px;
+}
+
+img.post-image {
     max-width: 400px;
     max-height: 200px;
+    margin-right: 12px;
+}
+
+.post-container {
+    display: flex;
+}
+
+.post-subject {
+    font-weight: bold;
+}
+
+ul.replies {
+    margin: 12px;
+}
+
+ul.replies li {
+    clear: left;
+}
+
+img.reply-image {
+    float: left;
+    margin-right: 12px;
+    margin-bottom: 12px;
 }
 
 input {

@@ -1,16 +1,26 @@
 {
   "posts": [
     {
-      "image": "./200x200.png",
+      "image": "./placeholders/200x200.png",
       "subject": "This is a subject too!",
-      "body": "But is this a body?",
+      "body": "This? A body? More likely than you'd think.",
       "replies": []
     },
     {
       "image": "https://placehold.co/200x200.png",
       "subject": "This is almost definitely a subject!",
-      "body": "This? A body? More likely than you'd think.",
-      "replies": []
+      "body": "But is this a body?",
+      "replies": [
+
+        {
+          "image": "./placeholders/200x200-red.png",
+          "body": "This is a reply!"
+        },
+        {
+          "image": "./placeholders/200x200-blue.png",
+          "body": "This is also a reply."
+        }
+      ]
     }
   ]
 }

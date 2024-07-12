@@ -29,20 +29,48 @@ function renderPost(post) {
   let li = document.createElement("li");
   feed.append(li);
 
+  let post_container = document.createElement("div");
+  post_container.classList.add("post-container");
+  li.append(post_container);
+
   let post_image = document.createElement("img");
   post_image.classList.add("post-image");
   post_image.setAttribute("src", post.image);
-  li.append(post_image);
+  post_container.append(post_image);
+
+  let post_text = document.createElement("div");
+  post_text.classList.add("post-text");
+  post_container.append(post_text);
 
   let post_subject = document.createElement("div");
   post_subject.classList.add("post-subject");
   post_subject.textContent = post.subject;
-  li.append(post_subject);
+  post_text.append(post_subject);
 
   let post_body = document.createElement("div");
   post_body.classList.add("post-body");
   post_body.textContent = post.body;
-  li.append(post_body);
+  post_text.append(post_body);
+
+  let replies = document.createElement("ul");
+  replies.classList.add("replies");
+  li.append(replies);
+
+
+  for (let reply of post.replies) {
+    let reply_li = document.createElement("li");
+    replies.append(reply_li);
+
+    let reply_image = document.createElement("img");
+    reply_image.classList.add("reply-image");
+    reply_image.setAttribute("src", reply.image);
+    reply_li.append(reply_image);
+
+    let reply_text = document.createElement("div");
+    reply_text.classList.add("reply-text");
+    reply_text.textContent = reply.body;
+    reply_li.append(reply_text);
+  }
 }
 
 function onDOMContentLoaded() {
