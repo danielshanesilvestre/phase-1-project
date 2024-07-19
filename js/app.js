@@ -1,4 +1,21 @@
 
+function onClickToggleReplies(event) {
+  let replies = event.target.parentElement.querySelector("ul.replies");
+
+  if (replies.hasAttribute("hidden")) {
+    replies.removeAttribute("hidden");
+  } else {
+    replies.setAttribute("hidden", "true");
+  }
+}
+
+function onSubmitReply(event) {
+  event.preventDefault();
+
+
+}
+
+
 function onSubmitPost(event) {
   event.preventDefault();
 
@@ -15,7 +32,6 @@ function onSubmitPost(event) {
       "Accept": "application/json",
     },
     body: JSON.stringify({
-      
     })
   };
 
@@ -52,10 +68,14 @@ function renderPost(post) {
   post_body.textContent = post.body;
   post_text.append(post_body);
 
+  let toggle_replies = document.createElement("button");
+  toggle_replies.textContent = "Toggle replies";
+  toggle_replies.addEventListener("click", onClickToggleReplies);
+  li.append(toggle_replies);
+
   let replies = document.createElement("ul");
   replies.classList.add("replies");
   li.append(replies);
-
 
   for (let reply of post.replies) {
     let reply_li = document.createElement("li");
@@ -68,7 +88,7 @@ function renderPost(post) {
 
     let reply_text = document.createElement("div");
     reply_text.classList.add("reply-text");
-    reply_text.textContent = reply.body;
+    reply_text.textContent = reply.text;
     reply_li.append(reply_text);
   }
 }
@@ -80,8 +100,6 @@ function onDOMContentLoaded() {
   fetch("http://localhost:3000/posts")
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-
         for (let post of data) {
           renderPost(post);
         }
