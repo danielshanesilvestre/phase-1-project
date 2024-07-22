@@ -42,11 +42,7 @@
       "image": "https://picsum.photos/seed/placeholder-5/540/360",
       "subject": "Placeholder subject #5",
       "body": "Placeholder body #5",
-      "replies": [
-        {
-          "text": "This is a reply??!"
-        }
-      ]
+      "replies": []
     }
   ]
 }

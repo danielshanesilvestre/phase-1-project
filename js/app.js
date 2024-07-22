@@ -1,42 +1,87 @@
+let posts = [];
+
+function renderReply(parent, reply) {
+  let reply_li = document.createElement("li");
+  parent.append(reply_li);
+
+  let reply_text = document.createElement("div");
+  reply_text.classList.add("reply-text");
+  reply_text.textContent = reply.text;
+  reply_li.append(reply_text);
+}
+
+
 function onSubmitReply(event) {
   event.preventDefault();
 
+  let post_id = event.target.parentElement.getAttribute("data-post-id");
+  let post = posts.find((post) => {
+    return post.id === post_id;
+  });
+
+  console.log(post);
+
+  let reply_textarea = event.target.querySelector("textarea.reply-form-text");
+
+  let new_reply = {
+    text: reply_textarea.value
+  };
+
+  const configuration = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: JSON.stringify({
+      replies: [...post.replies, new_reply],
+    })
+  };
+
+  fetch(`http://localhost:3000/posts/${post_id}`, configuration)
+      .then(response => response.json())
+      .then(data => {
+        // Render new reply
+        let replies_ul = event.target.parentElement.querySelector("ul.replies");
+        renderReply(replies_ul, data.replies[data.replies.length - 1]);
+
+        let replies_count = event.target.parentElement.querySelector("span.reply-count");
+        replies_count.textContent = `${data.replies.length} replies `
+
+        let toggle_replies = event.target.parentElement.querySelector("button.toggle-replies");
+        toggle_replies.removeAttribute("hidden");
+      });
 }
 
 function onClickReply(event) {
-  let reply_form = document.createElement("form");
+  let replies = event.target.parentElement.querySelector("ul.replies");
+  let reply_form = event.target.parentElement.querySelector("form.reply-form");
 
-  let post_id = event.target.parentElement.getAttribute("data-post-id");
-  let fetch_url = `http://localhost:3000/posts/${post_id}`;
+  if (reply_form === null)
+  {
+    event.target.textContent = "Cancel";
 
-  let new_reply = {
-    text: "This is a reply??!"
-  };
+    let reply_form = document.createElement("form");
+    reply_form.classList.add("reply-form");
+    event.target.parentElement.insertBefore(reply_form, replies);
+    reply_form.addEventListener("submit", onSubmitReply);
 
-  // This is nested because I don't know how else to do async JS
-  fetch(fetch_url)
-      .then(response => response.json())
-      .then(data => {
-        let replies = data.replies;
-        replies.push(new_reply);
+    let textarea = document.createElement("textarea");
+    textarea.classList.add("reply-form-text");
+    reply_form.append(textarea);
 
-        const configuration = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify({
-            replies: replies,
-          })
-        };
+    let br = document.createElement("br");
+    reply_form.append(br);
 
-        fetch(fetch_url, configuration)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-            });
-      });
+    let submit_reply = document.createElement("input");
+    submit_reply.classList.add("reply-submit");
+    submit_reply.setAttribute("type", "submit");
+    submit_reply.setAttribute("value", "Submit");
+    reply_form.append(submit_reply);
+  } else {
+    event.target.textContent = "Reply";
+    reply_form.remove();
+  }
 }
 
 function onClickToggleReplies(event) {
@@ -46,7 +91,7 @@ function onClickToggleReplies(event) {
     replies.removeAttribute("hidden");
     event.target.textContent = "Hide";
   } else {
-    replies.setAttribute("hidden", "true");
+    replies.setAttribute("hidden", "");
     event.target.textContent = "Show";
   }
 }
@@ -79,7 +124,7 @@ function onSubmitPost(event) {
   fetch("http://localhost:3000/posts", configuration)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        posts.push(data);
         renderPost(data)
       });
 
@@ -121,31 +166,26 @@ function renderPost(post) {
   li.append(replies_count);
 
   let toggle_replies = document.createElement("button");
+  toggle_replies.classList.add("toggle-replies");
   toggle_replies.textContent = "Hide";
-  toggle_replies.addEventListener("click", onClickToggleReplies);
   if (post.replies.length === 0) {
     toggle_replies.setAttribute("hidden", "true");
   }
   li.append(toggle_replies);
+  toggle_replies.addEventListener("click", onClickToggleReplies);
 
   let reply_button = document.createElement("button");
   reply_button.textContent = "Reply";
-  reply_button.addEventListener("click", onClickReply);
   li.append(reply_button);
+  reply_button.addEventListener("click", onClickReply);
 
   let replies = document.createElement("ul");
   replies.classList.add("replies");
   li.append(replies);
 
-  for (let reply of post.replies) {
-    let reply_li = document.createElement("li");
-    replies.prepend(reply_li);
-
-    let reply_text = document.createElement("div");
-    reply_text.classList.add("reply-text");
-    reply_text.textContent = reply.text;
-    reply_li.append(reply_text);
-  }
+  post.replies.forEach((reply) => {
+    renderReply(replies, reply);
+  });
 }
 
 function onDOMContentLoaded() {
@@ -155,9 +195,11 @@ function onDOMContentLoaded() {
   fetch("http://localhost:3000/posts")
       .then(response => response.json())
       .then(data => {
-        for (let post of data) {
+        posts = data;
+
+        posts.forEach((post) => {
           renderPost(post);
-        }
+        })
       })
       .catch(error => console.log(error));
 
