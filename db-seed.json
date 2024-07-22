@@ -2,14 +2,14 @@
   "posts": [
     {
       "id": "1",
-      "image": "./placeholders/placeholder-1-540x360.jpg",
+      "image": "https://picsum.photos/seed/placeholder-1/540/360",
       "subject": "Placeholder subject #1",
       "body": "Placeholder body #1",
       "replies": []
     },
     {
       "id": "2",
-      "image": "./placeholders/placeholder-2-540x360.jpg",
+      "image": "https://picsum.photos/seed/placeholder-2/540/360",
       "subject": "Placeholder subject #2",
       "body": "Placeholder body #2",
       "replies": [
@@ -25,21 +25,21 @@
     },
     {
       "id": "3",
-      "image": "./placeholders/placeholder-3-540x360.jpg",
+      "image": "https://picsum.photos/seed/placeholder-3/540/360",
       "subject": "Placeholder subject #3",
       "body": "Placeholder body #3",
       "replies": []
     },
     {
       "id": "4",
-      "image": "./placeholders/placeholder-4-540x360.jpg",
+      "image": "https://picsum.photos/seed/placeholder-4/540/360",
       "subject": "Placeholder subject #4",
       "body": "Placeholder body #4",
       "replies": []
     },
     {
       "id": "5",
-      "image": "./placeholders/placeholder-5-540x360.jpg",
+      "image": "https://picsum.photos/seed/placeholder-5/540/360",
       "subject": "Placeholder subject #5",
       "body": "Placeholder body #5",
       "replies": []

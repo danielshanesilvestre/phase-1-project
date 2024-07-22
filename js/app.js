@@ -3,10 +3,40 @@ function onSubmitReply(event) {
 
 }
 
-function onClickReply(evemt) {
-
+function onClickReply(event) {
   let reply_form = document.createElement("form");
 
+  let post_id = event.target.parentElement.getAttribute("data-post-id");
+  let fetch_url = `http://localhost:3000/posts/${post_id}`;
+
+  let new_reply = {
+    text: "This is a reply??!"
+  };
+
+  // This is nested because I don't know how else to do async JS
+  fetch(fetch_url)
+      .then(response => response.json())
+      .then(data => {
+        let replies = data.replies;
+        replies.push(new_reply);
+
+        const configuration = {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify({
+            replies: replies,
+          })
+        };
+
+        fetch(fetch_url, configuration)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+            });
+      });
 }
 
 function onClickToggleReplies(event) {
@@ -29,10 +59,6 @@ function onSubmitPost(event) {
   let post_form_image = document.getElementById("post-form-image");
   let post_form_subject = document.getElementById("post-form-subject");
   let post_form_body = document.getElementById("post-form-body");
-
-  console.log(post_form_image.value);
-  console.log(post_form_subject.value);
-  console.log(post_form_body.value);
 
   let request_body = {
     image: post_form_image.value,
@@ -63,7 +89,7 @@ function renderPost(post) {
   let feed = document.getElementById("feed");
 
   let li = document.createElement("li");
-  li.id = `post-${post.id}`
+  li.setAttribute("data-post-id", `${post.id}`);
   feed.prepend(li);
 
   let post_container = document.createElement("div");
@@ -114,11 +140,6 @@ function renderPost(post) {
   for (let reply of post.replies) {
     let reply_li = document.createElement("li");
     replies.prepend(reply_li);
-
-    let reply_image = document.createElement("img");
-    reply_image.classList.add("reply-image");
-    reply_image.setAttribute("src", reply.image);
-    reply_li.append(reply_image);
 
     let reply_text = document.createElement("div");
     reply_text.classList.add("reply-text");
