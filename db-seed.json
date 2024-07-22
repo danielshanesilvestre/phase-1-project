@@ -1,13 +1,15 @@
 {
   "posts": [
     {
-      "image": "./placeholders/200x200-red.png",
+      "id": 1,
+      "image": "./placeholders/placeholder-1-540x360.jpg",
       "subject": "This is a subject too!",
       "body": "This? A body? More likely than you'd think.",
       "replies": []
     },
     {
-      "image": "./placeholders/200x200-blue.png",
+      "id": 2,
+      "image": "./placeholders/placeholder-2-540x360.jpg",
       "subject": "This is almost definitely a subject!",
       "body": "But is this a body?",
       "replies": [
@@ -22,19 +24,22 @@
       ]
     },
     {
-      "image": "./placeholders/200x200-red.png",
+      "id": 3,
+      "image": "./placeholders/placeholder-3-540x360.jpg",
       "subject": "Placeholder subject #3",
       "body": "Placeholder body #3",
       "replies": []
     },
     {
-      "image": "./placeholders/200x200-blue.png",
+      "id": 4,
+      "image": "./placeholders/placeholder-4-540x360.jpg",
       "subject": "Placeholder subject #4",
       "body": "Placeholder body #4",
       "replies": []
     },
     {
-      "image": "./placeholders/200x200-red.png",
+      "id": 5,
+      "image": "./placeholders/placeholder-5-540x360.jpg",
       "subject": "Placeholder subject #5",
       "body": "Placeholder body #5",
       "replies": []
