@@ -1,20 +1,25 @@
+function onSubmitReply(event) {
+  event.preventDefault();
+
+}
+
+function onClickReply(evemt) {
+
+  let reply_form = document.createElement("form");
+
+}
 
 function onClickToggleReplies(event) {
   let replies = event.target.parentElement.querySelector("ul.replies");
 
   if (replies.hasAttribute("hidden")) {
     replies.removeAttribute("hidden");
+    event.target.textContent = "Hide";
   } else {
     replies.setAttribute("hidden", "true");
+    event.target.textContent = "Show";
   }
 }
-
-function onSubmitReply(event) {
-  event.preventDefault();
-
-
-}
-
 
 function onSubmitPost(event) {
   event.preventDefault();
@@ -25,17 +30,32 @@ function onSubmitPost(event) {
   let post_form_subject = document.getElementById("post-form-subject");
   let post_form_body = document.getElementById("post-form-body");
 
+  console.log(post_form_image.value);
+  console.log(post_form_subject.value);
+  console.log(post_form_body.value);
+
+  let request_body = {
+    image: post_form_image.value,
+    subject: post_form_subject.value,
+    body: post_form_body.value,
+    replies: []
+  };
+
   const configuration = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
     },
-    body: JSON.stringify({
-    })
+    body: JSON.stringify(request_body)
   };
 
-  fetch("http://localhost:3000/posts");
+  fetch("http://localhost:3000/posts", configuration)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        renderPost(data)
+      });
 
 }
 
@@ -43,7 +63,8 @@ function renderPost(post) {
   let feed = document.getElementById("feed");
 
   let li = document.createElement("li");
-  feed.append(li);
+  li.id = `post-${post.id}`
+  feed.prepend(li);
 
   let post_container = document.createElement("div");
   post_container.classList.add("post-container");
@@ -68,10 +89,23 @@ function renderPost(post) {
   post_body.textContent = post.body;
   post_text.append(post_body);
 
+  let replies_count = document.createElement("span");
+  replies_count.classList.add("reply-count")
+  replies_count.textContent = `${post.replies.length} replies `;
+  li.append(replies_count);
+
   let toggle_replies = document.createElement("button");
-  toggle_replies.textContent = "Toggle replies";
+  toggle_replies.textContent = "Hide";
   toggle_replies.addEventListener("click", onClickToggleReplies);
+  if (post.replies.length === 0) {
+    toggle_replies.setAttribute("hidden", "true");
+  }
   li.append(toggle_replies);
+
+  let reply_button = document.createElement("button");
+  reply_button.textContent = "Reply";
+  reply_button.addEventListener("click", onClickReply);
+  li.append(reply_button);
 
   let replies = document.createElement("ul");
   replies.classList.add("replies");
@@ -79,7 +113,7 @@ function renderPost(post) {
 
   for (let reply of post.replies) {
     let reply_li = document.createElement("li");
-    replies.append(reply_li);
+    replies.prepend(reply_li);
 
     let reply_image = document.createElement("img");
     reply_image.classList.add("reply-image");
