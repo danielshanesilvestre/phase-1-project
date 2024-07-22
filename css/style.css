@@ -9,6 +9,11 @@ form {
     line-height: 150%;
 }
 
+textarea#post-form-body {
+    width: 300px;
+    height: 120px;
+}
+
 li {
     clear: left;
 }
